@@ -1,0 +1,9 @@
+# Terraform cache and provider binaries
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+*.log
+*.exe
+*.zip
+*.tar.gz
