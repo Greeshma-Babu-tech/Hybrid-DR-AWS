@@ -7,3 +7,6 @@ crash.log
 *.exe
 *.zip
 *.tar.gz
+.terraform/
+*.tfstate
+*.log
