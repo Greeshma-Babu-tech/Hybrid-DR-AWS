@@ -1,5 +1,5 @@
 resource "aws_instance" "dr_web" {
-  ami                         = "ami-0c55b159cbfafe1f0" # Replace with latest Ubuntu AMI
+  ami                         = "ami-020cba7c55df1f615" # Canonical, Ubuntu, 24.04, amd64 noble image
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.dr_subnet.id
   vpc_security_group_ids      = [aws_security_group.dr_sg.id]

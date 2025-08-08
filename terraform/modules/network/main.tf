@@ -7,17 +7,26 @@ resource "aws_vpc" "dr_vpc" {
   }
 }
 
-resource "aws_subnet" "dr_subnet" {
+resource "aws_subnet" "dr_subnet_public" {
   vpc_id                  = aws_vpc.dr_vpc.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dr-subnet"
+    Name = "dr-subnet-public"
   }
 }
+resource "aws_subnet" "dr_subnet_private" {
+  vpc_id                  = aws_vpc.dr_vpc.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "us-east-1a"
+  map_public_ip_on_launch = true
 
+  tags = {
+    Name = "dr-subnet-private"
+  }
+}
 resource "aws_internet_gateway" "dr_igw" {
   vpc_id = aws_vpc.dr_vpc.id
 
@@ -40,6 +49,6 @@ resource "aws_route_table" "dr_route_table" {
 }
 
 resource "aws_route_table_association" "dr_subnet_association" {
-  subnet_id      = aws_subnet.dr_subnet.id
+  subnet_id      = aws_subnet.dr_subnet_public.id
   route_table_id = aws_route_table.dr_route_table.id
 }

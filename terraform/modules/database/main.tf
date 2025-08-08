@@ -1,3 +1,14 @@
+# DB Subnet Group for Private Subnets
+resource "aws_db_subnet_group" "dr_db_subnet_group" {
+  name       = "dr-db-subnet-group"
+  subnet_ids = [
+    module.network.aws_subnet.dr_subnet_private.id
+  ]
+
+  tags = {
+    Name = "dr-db-subnet-group"
+  }
+}
 resource "aws_db_instance" "dr_mysql" {
   allocated_storage    = 20
   engine               = "mysql"
@@ -8,9 +19,9 @@ resource "aws_db_instance" "dr_mysql" {
   password             = "password123"  # Replace in production with secret manager
   skip_final_snapshot  = true
 
-  publicly_accessible = true
+  publicly_accessible = false
   vpc_security_group_ids = [aws_security_group.dr_sg.id]
-
+  db_subnet_group_name = aws_db_subnet_group.dr_db_subnet_group.name
   tags = {
     Name = "dr-mysql-db"
   }
