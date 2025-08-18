@@ -1,6 +1,9 @@
 pipeline {
   agent any
 
+  tools {
+    terraform 'terraform-1.8.0' 
+  }
   environment {
     AWS_REGION = 'us-east-1'
   }
@@ -9,26 +12,30 @@ pipeline {
     stage('Checkout') {
       steps {
         git url: 'https://github.com/Greeshma-Babu-tech/Hybrid-DR-AWS.git', branch: 'main'
-        
       }
     }
 
     stage('Init') {
       steps {
-        sh 'cd terraform'
-        sh 'terraform init'
+        dir('terraform') {
+          sh 'terraform init'
+        }
       }
     }
 
     stage('Validate') {
       steps {
-        sh 'terraform validate'
+        dir('terraform') {
+          sh 'terraform validate'
+        }
       }
     }
 
     stage('Plan') {
       steps {
-        sh 'terraform plan -out=tfplan'
+        dir('terraform') {
+          sh 'terraform plan -out=tfplan'
+        }
       }
     }
 
@@ -38,13 +45,17 @@ pipeline {
         ok "Deploy"
       }
       steps {
-        sh 'terraform apply tfplan'
+        dir('terraform') {
+          sh 'terraform apply tfplan'
+        }
       }
     }
 
     stage('Clean') {
       steps {
-        sh 'rm -f tfplan'
+        dir('terraform') {
+          sh 'rm -f tfplan'
+        }
       }
     }
   }
