@@ -1,7 +1,7 @@
 resource "aws_security_group" "dr_sg" {
   name        = "dr-sg"
   description = "Allow SSH and HTTP"
-  vpc_id      = aws_vpc.dr_vpc.id
+  vpc_id      = var.dr_vpc_id
 
   ingress {
     description = "SSH"

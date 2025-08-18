@@ -1,9 +1,7 @@
 # DB Subnet Group for Private Subnets
 resource "aws_db_subnet_group" "dr_db_subnet_group" {
   name       = "dr-db-subnet-group"
-  subnet_ids = [
-    module.network.aws_subnet.dr_subnet_private.id
-  ]
+  subnet_ids = [var.private_subnet_id_1, var.private_subnet_id_2]
 
   tags = {
     Name = "dr-db-subnet-group"
@@ -20,7 +18,7 @@ resource "aws_db_instance" "dr_mysql" {
   skip_final_snapshot  = true
 
   publicly_accessible = false
-  vpc_security_group_ids = [aws_security_group.dr_sg.id]
+  #vpc_security_group_ids = [aws_security_group.dr_sg.id]
   db_subnet_group_name = aws_db_subnet_group.dr_db_subnet_group.name
   tags = {
     Name = "dr-mysql-db"

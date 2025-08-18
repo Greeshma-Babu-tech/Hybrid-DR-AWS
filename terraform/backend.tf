@@ -1,4 +1,3 @@
-
 #Setting backend 
 terraform {
   backend "s3" {

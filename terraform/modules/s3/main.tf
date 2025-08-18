@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "dr_backup" {
-  bucket        = "dr-backup-bucket-1"
+  bucket        = "dr-backup-bucket-x1"
   force_destroy = true
 
   tags = {
@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "dr_backup" {
   }
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "dr_backup_lifecycle" {
+/*resource "aws_s3_bucket_lifecycle_configuration" "dr_backup_lifecycle" {
   bucket = aws_s3_bucket.dr_backup.id
 
   rule {
@@ -23,9 +23,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "dr_backup_lifecycle" {
       days = 365
     }
   }
-}
+}*/
 resource "aws_s3_bucket_versioning" "versioning" {
-  bucket = aws_s3_bucket.backup.id
+  bucket = aws_s3_bucket.dr_backup.id
 
   versioning_configuration {
     status = "Enabled"

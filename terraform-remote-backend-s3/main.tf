@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1" # Replace with your preferred region
+  region = "us-east-1"
 }
 
 # S3 Bucket for Terraform Backend
@@ -21,21 +21,9 @@ resource "aws_s3_bucket_versioning" "dr_backend_versioning" {
   }
 }
 
-# (Optional) Lifecycle Rule to clean up incomplete uploads, etc.
-resource "aws_s3_bucket_lifecycle_configuration" "dr_backend_lifecycle" {
-  bucket = aws_s3_bucket.dr_backend.id
 
-  rule {
-    id     = "cleanup-incomplete-multipart-uploads"
-    status = "Enabled"
 
-    abort_incomplete_multipart_upload {
-      days_after_initiation = 7
-    }
-  }
-}
-
-# (Optional) Encryption - Server-side AES256
+# Encryption - Server-side AES256
 resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
   bucket = aws_s3_bucket.dr_backend.id
 
@@ -46,7 +34,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
   }
 }
 
-# (Optional) Block Public Access
+# Block Public Access
 resource "aws_s3_bucket_public_access_block" "public_access" {
   bucket = aws_s3_bucket.dr_backend.id
 
@@ -58,9 +46,9 @@ resource "aws_s3_bucket_public_access_block" "public_access" {
 
 #Create DynamoDB Table for State Locking
 resource "aws_dynamodb_table" "dr_lock_table" {
-  name           = "dr-terraform-lock-table"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "LockID"
+  name         = "dr-terraform-lock-table"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "LockID"
 
   attribute {
     name = "LockID"

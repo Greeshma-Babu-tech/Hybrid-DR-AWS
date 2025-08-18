@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/Greeshma-Babu-tech/Hybrid-DR-AWS'  // Replace with your Git repo
+        git 'https://github.com/Greeshma-Babu-tech/Hybrid-DR-AWS'  
       }
     }
 

@@ -17,14 +17,24 @@ resource "aws_subnet" "dr_subnet_public" {
     Name = "dr-subnet-public"
   }
 }
-resource "aws_subnet" "dr_subnet_private" {
+resource "aws_subnet" "dr_subnet_private_1" {
   vpc_id                  = aws_vpc.dr_vpc.id
-  cidr_block              = "10.0.1.0/24"
+  cidr_block              = "10.0.2.0/24"
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "dr-subnet-private"
+    Name = "dr-subnet-private-1"
+  }
+}
+resource "aws_subnet" "dr_subnet_private_2" {
+  vpc_id                  = aws_vpc.dr_vpc.id
+  cidr_block              = "10.0.3.0/24"
+  availability_zone       = "us-east-1b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "dr-subnet-private-2"
   }
 }
 resource "aws_internet_gateway" "dr_igw" {
