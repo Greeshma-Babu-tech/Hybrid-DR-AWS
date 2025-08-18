@@ -8,12 +8,13 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/Greeshma-Babu-tech/Hybrid-DR-AWS/terraform'  
+        git 'https://github.com/Greeshma-Babu-tech/Hybrid-DR-AWS'
       }
     }
 
     stage('Init') {
       steps {
+        sh 'cd terraform'
         sh 'terraform init'
       }
     }
