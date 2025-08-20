@@ -49,7 +49,17 @@ pipeline {
         }
       }
     }
-
+    stage('Approve') {
+      input{
+        message "Approve Deletion?"
+        ok "Delete"
+    }
+    steps {
+      dir('terraform'){
+        sh 'terraform destroy tfplan'
+      }
+    }
+    }
     stage('Clean') {
       steps {
         dir('terraform') {
