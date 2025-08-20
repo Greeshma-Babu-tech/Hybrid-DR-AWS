@@ -38,7 +38,7 @@ pipeline {
       }
     }
 
-    stage('Approve') {
+    stage('Create') {
       input {
         message "Approve deployment?"
         ok "Deploy"
@@ -49,16 +49,16 @@ pipeline {
         }
       }
     }
-    stage('Approve') {
+    stage('Delete') {
       input{
         message "Approve Deletion?"
         ok "Delete"
     }
-    steps {
-      dir('terraform'){
-        sh 'terraform destroy tfplan'
+      steps {
+        dir('terraform'){
+          sh 'terraform destroy tfplan'
+        }
       }
-    }
     }
     stage('Clean') {
       steps {
