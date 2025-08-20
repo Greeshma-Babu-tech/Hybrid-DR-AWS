@@ -56,7 +56,7 @@ pipeline {
     }
       steps {
         dir('terraform'){
-          sh 'terraform destroy tfplan'
+          sh 'terraform destroy'
         }
       }
     }
